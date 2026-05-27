@@ -79,13 +79,28 @@ A built-in `ResourceTracker` calculates efficiency gains in real-time, validatin
 
 ## 🚀 Getting Started
 
-### Prerequisites
-Ensure you have the required dependencies installed:
+### Installation & Virtual Environment Setup
+To isolate the framework from system-level python package conflicts, set up a virtual environment and install the exact verified package versions:
+
 ```bash
-pip install torch transformers datasets sentence-transformers textstat tabulate scipy pandas seaborn
+# 1. Create the virtual environment
+python -m venv .venv
+
+# 2. Activate the virtual environment
+# On Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+# On macOS/Linux:
+source .venv/bin/activate
+
+# 3. Install the exact direct dependencies in isolated mode
+pip install --isolated --no-user -r requirements.txt
+
+# 4. Download the required SpaCy English linguistic model
+python -m spacy download en_core_web_sm
 ```
 
 ### Running the Benchmarks
 1. Open the [Phase1_Stabilization.ipynb](Phase1_Stabilization.ipynb) notebook in Jupyter or your favorite IDE.
-2. Ensure you have the `300_sample.jsonl` dataset (or let the notebook default to the built-in fallback mock samples).
-3. Run the cells sequentially to experience the amateur-only critique pipeline and visualize the real-time resource cost savings!
+2. Select the `.venv` virtual environment as your Jupyter kernel interpreter.
+3. Ensure you have the `300_sample.jsonl` dataset (or let the notebook default to the built-in fallback mock samples).
+4. Run the cells sequentially to experience the amateur-only critique pipeline and visualize the real-time resource cost savings!
