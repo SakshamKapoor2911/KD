@@ -1,0 +1,21 @@
+# Ignored Directories
+docs/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.virtualenv/
+env/
+venv/
+.env
+
+# Ignored Files
+*.csv
+*.json
+*.png
+*.jpg
+*.jpeg
+*.pdf
+statistical_testing.json
+search_results.txt
+notebook_code.py
+generate_phase1_nb.py
