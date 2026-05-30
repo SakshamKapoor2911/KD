@@ -138,8 +138,7 @@ To prove the core value of our distilled framework, we must evaluate and compare
 3. **Distilled Amateur (With Critique)**: Our fine-tuned `TinyLlama-1B` executing the self-critique loop autonomously. *(This is our proposed method).*
 4. **Original CLEAR Setup**: The multi-model setup (Expert `LLaMA-8B` + Amateur `TinyLlama-1B`). *(This represents the upper bound).*
 
-#### Core Story to Pitch:
-> *"We simplified the complex, high-overhead multi-model CLEAR setup by compressing the entire feedback loop into a single cheap model (TinyLlama). By distilling feedback, the standalone distilled model achieves an **X% performance boost** over the base model, matching the expensive CLEAR framework at a fraction of the VRAM, Flops, and API latency costs."*
+
 
 ---
 
