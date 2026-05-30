@@ -129,32 +129,25 @@ Based on Advisor Michael Saxon's key recommendations, here is the roadmap for es
 * Since our evaluation pipeline uses a frequentist **paired t-test** (across metrics like readability, semantic similarity, perplexity, and NLI entailment), **300–1,000 samples provide more than enough statistical power** to achieve a highly reliable $p$-value ($p < 0.05$).
 * 10k rows would take hours to run, significantly slowing down iteration speed without adding statistical value.
 
-### 🧪 Next Steps to Set Up a Strong Baseline
-
-To prove the core value of our distilled framework, we must evaluate and compare the following **four configurations**:
-
-1. **Base Amateur (No Critique)**: The raw unrefined `TinyLlama-1B` generating answers directly.
-2. **Base Amateur (With Critique, Un-distilled)**: The raw `TinyLlama-1B` running the self-critique loop *before* training. *(This proves if the critique format itself helps a small model without fine-tuning).*
-3. **Distilled Amateur (With Critique)**: Our fine-tuned `TinyLlama-1B` executing the self-critique loop autonomously. *(This is our proposed method).*
-4. **Original CLEAR Setup**: The multi-model setup (Expert `LLaMA-8B` + Amateur `TinyLlama-1B`). *(This represents the upper bound).*
-
-
-
----
-
 ## 📊 Current Status & Next Steps
 
-We successfully ran a **15-sample test** on the `openai/gsm8k` dataset to evaluate all four configurations:
-* **Config 1 (Base, No Critique):** `20.00%` accuracy
-* **Config 2 (Base, Critique, Un-distilled):** `26.67%` accuracy
-* **Config 3 (Distilled Amateur):** `13.33%` accuracy *(overfitted on truncated samples)*
-* **Config 4 (Original CLEAR):** `26.67%` accuracy
+We successfully implemented a modular benchmark script (`run_evaluation.py`) and ran a **15-sample test** on the `openai/gsm8k` dataset to evaluate **four key configurations**:
+
+1. **Base Amateur (No Critique):** `20.00%` accuracy
+   * *Role:* Raw, unrefined `TinyLlama-1B` generating answers directly.
+2. **Base Amateur (With Critique, Un-distilled):** `26.67%` accuracy
+   * *Role:* Raw `TinyLlama-1B` running the self-critique loop autonomously (un-distilled).
+3. **Distilled Amateur (With Critique):** `13.33%` accuracy
+   * *Role:* Fine-tuned `TinyLlama-1B` (after rapid 5-sample SFT distillation).
+4. **Original CLEAR Setup:** `26.67%` accuracy
+   * *Role:* Full multi-model setup (Expert `LLaMA-8B` + Amateur `TinyLlama-1B`).
 
 ### 🛠️ Key Takeaways & Action Items:
-1. **Self-Critique Works:** Adding un-distilled self-critique (Config 2) boosted accuracy by **+6.67%**, matching the multi-model CLEAR setup.
-2. **Overcome Overfitting:** The drop in Config 3 shows catastrophic forgetting due to a tiny training size (5 samples). We must scale our SFT training set to **300–1000 samples** to stabilize and generalise.
-3. **Scale Up to Multi-GPU:** Using our **2x NVIDIA RTX 3090 GPU** setup, we can distribute models across GPUs (e.g. Teacher on GPU 0, Student + NLI on GPU 1) or parallelise training via Hugging Face `accelerate`, making a full **1,000-sample benchmark run completely in under 25 minutes**!
+1. **Self-Critique Works:** Adding un-distilled self-critique (**Config 2**) boosted accuracy by **+6.67%**, matching the multi-model CLEAR setup.
+2. **Overcome Overfitting (Config 3):** The performance drop in Config 3 shows catastrophic forgetting due to a tiny training size (5 samples). We must scale our training set to **300–1000 samples** to stabilize and generalize.
+3. **Scale Up to Multi-GPU:** Using our **2x NVIDIA RTX 3090 GPU** setup, we can distribute models across GPUs (e.g. Teacher on GPU 0, Student + NLI on GPU 1) or parallelize training via Hugging Face `accelerate`, making a full **1,000-sample benchmark run completely in under 25 minutes**!
 
 *(For full details and estimations, view [detailed_results.md](detailed_results.md)).*
+
 
 
