@@ -25,8 +25,13 @@ def visualize_student_performance(
     q_low=5, q_high=95,
     min_range=5.0
 ):
+    if student_performance is None or len(student_performance) == 0:
+        print("[Warning] No student performance history to visualize.")
+        return
+
     student_performance = safe_to_numpy(student_performance)
     student_performance = np.array(student_performance, dtype=float)
+
 
     if student_performance.ndim == 1:
         student_performance = np.expand_dims(student_performance, axis=0)
